@@ -5,27 +5,88 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public GameObject hacha;
-    public int hpHacha;
-    public int dañoHacha;
-    int gastoHachaPorGolpe;
+    public bool movimiento;
+    public bool golpear;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public float velocidadMovimiento;
+    public Animator animator;
+    public Transform rootBone;
+
+    float inputX;
+    bool golpeando;
+    float bufferTime = 0.2f;
+    float buffer;
+
+
+    private void Update()
     {
-        if(collision.CompareTag("Arbol"))
-        {
-            collision.GetComponent<Arbol>().RecibirDaño(dañoHacha);
-            hpHacha -= gastoHachaPorGolpe;
+        if(movimiento)
+            Mover();
 
-            if (hpHacha < 1)
+        if(golpear)
+            Golpear();
+
+        AnimatorParameters();
+    }
+
+    void Golpear()
+    {
+        if(Input.GetButtonDown("Jump"))
+        {
+            if(!golpeando)
             {
-                SeRompioElHacha();
+                animator.Play("Golpear");
+                golpeando = true;
+                buffer += bufferTime;
+                StartCoroutine(GolpearBuffer());
             }
-                
+            else
+            {
+                buffer += bufferTime;
+            }
+
+            
+            
+            
         }
     }
 
-    void SeRompioElHacha()
+    void Mover()
     {
+        inputX = Input.GetAxis("Horizontal");
+
+        if(inputX !=0)
+        {
+            transform.Translate(Vector3.right * inputX * velocidadMovimiento * Time.deltaTime);
+            Flip();
+        }
 
     }
+
+    void Flip()
+    {
+        transform.localScale = inputX > 0? Vector3.one : new Vector3(-1,1,1);
+    }
+
+    void AnimatorParameters()
+    {
+        animator.SetFloat("inputX", Mathf.Abs(inputX));
+        animator.SetBool("golpeando", golpeando);
+    }
+
+    IEnumerator GolpearBuffer()
+    {
+        float t = 0;
+
+        while(t < buffer)
+        {
+            t+= Time.deltaTime;
+            yield return null;
+        }
+
+        buffer = 0;
+        golpeando = false;
+        
+    }
+
 }
