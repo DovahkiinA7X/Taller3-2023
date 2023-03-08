@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public GameObject hacha;
+    public Hacha hacha;
     public bool movimiento;
     public bool golpear;
 
@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     float inputX;
     bool golpeando;
-    float bufferTime = 0.2f;
+    float bufferTime = 0.3f;
     float buffer;
 
 
@@ -33,27 +33,13 @@ public class Player : MonoBehaviour
     {
         if(Input.GetButtonDown("Jump"))
         {
-            if(!golpeando)
-            {
-                animator.Play("Golpear");
-                golpeando = true;
-                buffer += bufferTime;
-                StartCoroutine(GolpearBuffer());
-            }
-            else
-            {
-                buffer += bufferTime;
-            }
-
-            
-            
-            
+            animator.Play("Golpear"); 
         }
     }
 
     void Mover()
     {
-        inputX = Input.GetAxis("Horizontal");
+        inputX = Input.GetAxisRaw("Horizontal");   
 
         if(inputX !=0)
         {
@@ -71,22 +57,11 @@ public class Player : MonoBehaviour
     void AnimatorParameters()
     {
         animator.SetFloat("inputX", Mathf.Abs(inputX));
-        animator.SetBool("golpeando", golpeando);
     }
 
-    IEnumerator GolpearBuffer()
-    {
-        float t = 0;
 
-        while(t < buffer)
-        {
-            t+= Time.deltaTime;
-            yield return null;
-        }
 
-        buffer = 0;
-        golpeando = false;
-        
-    }
+
+
 
 }
