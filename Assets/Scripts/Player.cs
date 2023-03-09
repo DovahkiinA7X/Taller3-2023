@@ -13,9 +13,8 @@ public class Player : MonoBehaviour
     public Transform rootBone;
 
     float inputX;
-    bool golpeando;
-    float bufferTime = 0.3f;
-    float buffer;
+
+
 
 
     private void Update()
@@ -33,7 +32,12 @@ public class Player : MonoBehaviour
     {
         if(Input.GetButtonDown("Jump"))
         {
-            animator.Play("Golpear"); 
+            StartCoroutine(BloquearMovimientoDuranteAnimacion());
+
+            if (hacha.hpHacha.valor > 1)
+                animator.Play("Golpear");
+            else
+                animator.Play("HachaRota");
         }
     }
 
@@ -57,6 +61,18 @@ public class Player : MonoBehaviour
     void AnimatorParameters()
     {
         animator.SetFloat("inputX", Mathf.Abs(inputX));
+    }
+
+    IEnumerator BloquearMovimientoDuranteAnimacion()
+    {
+        movimiento = false;
+
+        while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        {
+            yield return null;
+        }
+
+        movimiento = true;
     }
 
 

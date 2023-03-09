@@ -4,20 +4,30 @@ using UnityEngine;
 
 public class Hacha : MonoBehaviour
 {
-    public int hpHacha;
-    public int dañoHacha;
-    public int gastoPorGolpe;
+
+    public IntVariable hpHacha;
+    public IntVariable dañoHacha;
+    public IntVariable gastoPorGolpe;
+    public IntVariable lvlHacha;
+
     public Sprite hachaNormal, hachaRota;
     public SpriteRenderer spr;
+    public AudioClip sonidoHachaRota;
+    public AudioSource audioSource;
+
 
     public void Golpeo()
     {
-        hpHacha -= gastoPorGolpe;
+        hpHacha.valor -= gastoPorGolpe.valor;
         CheckHachaHP();
     }
 
     void CheckHachaHP()
     {
-        spr.sprite = hpHacha > 0 ? hachaNormal : hachaRota;
+        spr.sprite = hpHacha.valor > 0 ? hachaNormal : hachaRota;
+        if(hpHacha.valor < 1)
+        {
+            audioSource.PlayOneShot(sonidoHachaRota);
+        }
     }
 }
