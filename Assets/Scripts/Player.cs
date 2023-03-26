@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public Hacha hacha;
-    public bool movimiento;
-    public bool golpear;
+    public Hacha hacha;                 // referencia al Hacha
+    public Animator animator;           // referencia al animator
+    
+    public bool movimiento;             // activar o desactivar el movimiento
+    public bool golpear;                // activar o desactivar el golpe del hacha
 
     public float velocidadMovimiento;
-    public Animator animator;
-    public Transform rootBone;
 
     float inputX;
 
@@ -32,9 +32,9 @@ public class Player : MonoBehaviour
     {
         if(Input.GetButtonDown("Jump"))
         {
-            StartCoroutine(BloquearMovimientoDuranteAnimacion());
+            StartCoroutine(BloquearMovimientoDuranteAnimacion());   //el player no se puede mover cuando esta golpeando
 
-            if (hacha.hpHacha.valor > 1)
+            if (hacha.hpHacha.valor > 1)                            // si el hacha tiene HP puede golpear, sino, reproduce la animacion de hacha rota
                 animator.Play("Golpear");
             else
                 animator.Play("HachaRota");
@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 
     void Mover()
     {
-        inputX = Input.GetAxisRaw("Horizontal");   
+        inputX = Input.GetAxisRaw("Horizontal");                // obtiene e valor del axis horizontal 
 
         if(inputX !=0)
         {
@@ -55,24 +55,24 @@ public class Player : MonoBehaviour
 
     void Flip()
     {
-        transform.localScale = inputX > 0? Vector3.one : new Vector3(-1,1,1);
+        transform.localScale = inputX > 0? Vector3.one : new Vector3(-1,1,1); //gira al personaje en la dirección donde se está moviendo
     }
 
     void AnimatorParameters()
     {
-        animator.SetFloat("inputX", Mathf.Abs(inputX));
+        animator.SetFloat("inputX", Mathf.Abs(inputX));     // alimenta el parametro de INputX del animator
     }
 
     IEnumerator BloquearMovimientoDuranteAnimacion()
     {
-        movimiento = false;
+        movimiento = false;         // bloquea el movimiento del personaje
 
-        while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))
+        while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))  // espera hasta que la animación llegue al Idle para seguir con la corutina
         {
             yield return null;
         }
 
-        movimiento = true;
+        movimiento = true;          // desbloquea el movimiento del personaje
     }
 
 

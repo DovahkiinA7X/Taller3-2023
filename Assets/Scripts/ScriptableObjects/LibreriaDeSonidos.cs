@@ -9,6 +9,7 @@ public class LibreriaDeSonidos : ScriptableObject
 
     public AudioClip clip
     {
+        // devuelve un sonido aleatorio de la libreria
         get { return sonidos[Random.Range(0, sonidos.Length)]; }
     }
 

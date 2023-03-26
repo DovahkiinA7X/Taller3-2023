@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 6208123435133404393}
   - component: {fileID: 1474204931309961352}
   - component: {fileID: 6208123435133404392}
+  - component: {fileID: 2992211102195420147}
   m_Layer: 0
   m_Name: El hacha
-  m_TagString: Untagged
+  m_TagString: hacha
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,9 +98,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3d8ea4e28a3d664ab70da57c722aa12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpHacha: 40
-  "da\xF1oHacha": 25
-  gastoPorGolpe: 1
+  hpHacha: {fileID: 0}
+  "da\xF1oHacha": {fileID: 0}
+  gastoPorGolpe: {fileID: 0}
+  lvlHacha: {fileID: 0}
   hachaNormal: {fileID: 9168573801450311011, guid: 73cf26adc92b062459bee25319c76901, type: 3}
   hachaRota: {fileID: 7213775332710959676, guid: 73cf26adc92b062459bee25319c76901, type: 3}
   spr: {fileID: 1474204931309961352}
+  sonidoHachaRota: {fileID: 0}
+  audioSource: {fileID: 0}
+--- !u!50 &2992211102195420147
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2409392116821354143}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
