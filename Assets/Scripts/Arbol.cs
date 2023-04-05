@@ -10,6 +10,18 @@ public class Arbol : MonoBehaviour
     public int hp;
     public UnityEvent onHit, onDead, onCaida;
     public TextMeshPro textoDaño;
+    public int dropValue;
+
+    public GameObject prefabArbol;
+
+
+
+    public void ResetearHp()
+    {
+        hp = 100;
+        // random opcional
+
+    }
 
     public void RecibirDaño(int _daño)
     {
@@ -39,6 +51,9 @@ public class Arbol : MonoBehaviour
 
     void Caida()
     {
+        SpawnearElOtroArbol();
+        //agregar madera a inventario
+        GameManager.gm.AgregarMadera(dropValue);
         onCaida.Invoke();                           // este evento se manda a llamar desde la animación de caida
     }
 
@@ -58,5 +73,26 @@ public class Arbol : MonoBehaviour
             collision.GetComponent<Hacha>().Golpeo();                       // ejecuta la funcion Golpeo dentro del hacha
             RecibirDaño(daño);                                              // Aplica daño al arbol
         }
+    }
+
+
+    void SpawnearElOtroArbol()
+    {
+        // spawnear el otro arbol
+        // obtener la posicion donde se va a spawnear
+        // randomizar la posicion
+        // randomizar la escala
+        // randomizar su rotacion
+
+        Vector3 posicionDelOtroArbol = transform.position;
+        posicionDelOtroArbol.x += Random.Range(3 , 8);
+
+        GameObject elOtroArbolito =  Instantiate(prefabArbol, posicionDelOtroArbol, Quaternion.identity);
+        elOtroArbolito.SetActive(true);
+
+        elOtroArbolito.transform.localScale = Vector3.one * Random.Range(.7f, 1.5f);
+
+        elOtroArbolito.GetComponent<Arbol>().ResetearHp();
+
     }
 }

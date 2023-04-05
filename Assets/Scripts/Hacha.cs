@@ -35,4 +35,12 @@ public class Hacha : MonoBehaviour
             spr.sprite = hachaNormal;
         }
     }
+
+    public void RepararHacha(int _reparacion)
+    {
+        hpHacha.valor += _reparacion;
+        // chequear si supére el maximo de hp
+        // si supere el maximo, dejar el valor maximo
+
+    }
 }

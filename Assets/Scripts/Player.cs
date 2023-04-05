@@ -67,6 +67,8 @@ public class Player : MonoBehaviour
     {
         movimiento = false;         // bloquea el movimiento del personaje
 
+        yield return new WaitForEndOfFrame();
+
         while(!animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"))  // espera hasta que la animación llegue al Idle para seguir con la corutina
         {
             yield return null;
